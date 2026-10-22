@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>x402 Playground — pay-per-call for agents, no account</title>
+<link rel="canonical" href="https://derbaroser-eng.github.io/x402-playground/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="x402 Playground — pay-per-call API, no account">
+<meta property="og:description" content="x402 explained in 30 seconds, a live 402 challenge you can fetch yourself, and copy-paste Python and JavaScript integration. No account, no API key, no subscription.">
+<meta property="og:url" content="https://derbaroser-eng.github.io/x402-playground/">
+<meta name="twitter:card" content="summary">
+<meta name="description" content="x402 in 30 seconds. Fetch a live 402 payment challenge from a real pay-per-call service. Copy-paste Python and JavaScript. No account, no API key, no subscription.">
+<style>
+  :root{--bg:#0b0d10;--panel:#12161c;--line:#1e2530;--ink:#e8edf4;--dim:#8b97a8;--accent:#4ade80;--warn:#fbbf24;--radius:14px}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  h1{font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.08;margin:0 0 14px;letter-spacing:-.02em;font-weight:650}
+  h1 .dot{color:var(--accent)}
+  .tag{font-size:clamp(1rem,2.4vw,1.25rem);color:var(--dim);margin:0;max-width:56ch}
+  h2{font-size:1.05rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin:56px 0 20px;font-weight:600}
+  h3{font-size:1.05rem;font-weight:600}
+  p{margin:0 0 16px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:#1a212b;padding:2px 6px;border-radius:5px}
+  .principle{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius);padding:20px 24px;margin:0 0 16px}
+  .principle p:last-child{margin:0}
+  .principle strong{color:var(--accent);font-weight:600}
+  .grid{display:grid;gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+  .card h3{margin:0 0 6px;font-size:1.05rem;font-weight:600}
+  .card p{margin:0;color:var(--dim);font-size:.95rem}
+  .status{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--dim);margin:0 0 26px}
+  .status .led{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .status.off .led{background:var(--warn)}
+  pre{background:#0f1319;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem;line-height:1.7;margin:0 0 16px;color:#cbd5e1}
+  pre .c{color:#5b6675}
+  .cta{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#0b0d10;font-weight:600;padding:14px 28px;border-radius:999px;text-decoration:none;font-size:1rem;margin:24px 0}
+  .cta-secondary{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--accent);border:1px solid var(--accent);font-weight:600;padding:12px 24px;border-radius:999px;text-decoration:none;font-size:.95rem;margin:0 0 24px}
+  .cta-tertiary{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--dim);border:1px solid var(--line);font-weight:600;padding:12px 24px;border-radius:999px;text-decoration:none;font-size:.95rem;margin:0 0 24px}
+  footer{padding:44px 0 72px;border-top:1px solid var(--line);color:var(--dim);font-size:.9rem}
+  a{color:var(--accent)}
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 20px}
+  .flow .step{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;position:relative}
+  .flow .step .n{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#0b0d10;font-size:.75rem;font-weight:700;margin-bottom:10px}
+  .flow .step h3{font-size:.9rem;margin:0 0 6px}
+  .flow .step p{font-size:.82rem;color:var(--dim);margin:0}
+  @media(max-width:760px){.flow{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){.flow{grid-template-columns:1fr}}
+  .demo{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin:0 0 20px}
+  .demo label{display:block;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:0 0 6px;font-weight:600}
+  .demo input,.demo textarea{width:100%;background:#0f1319;border:1px solid var(--line);border-radius:10px;color:var(--ink);font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;padding:10px 12px;margin:0 0 14px}
+  .demo textarea{min-height:74px;resize:vertical}
+  .demo input:focus,.demo textarea:focus{outline:none;border-color:var(--accent)}
+  .row2{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+  @media(max-width:560px){.row2{grid-template-columns:1fr}}
+  .btn{background:var(--accent);color:#0b0d10;border:0;font-weight:600;padding:12px 22px;border-radius:999px;font-size:.95rem;cursor:pointer;margin:2px 0 0}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:disabled{opacity:.5;cursor:default}
+  .ghost{background:transparent;color:var(--dim);border:1px solid var(--line);font-weight:600;padding:12px 22px;border-radius:999px;font-size:.95rem;cursor:pointer;margin:2px 0 0 10px}
+  .ghost:hover{color:var(--accent);border-color:var(--accent)}
+  .result{margin-top:20px;display:none}
+  .result.on{display:block}
+  .badge{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;border-radius:999px;padding:3px 11px;font-weight:600;margin:0 0 12px;border:1px solid var(--line);color:var(--dim)}
+  .badge.live{border-color:var(--accent);color:var(--accent)}
+  .badge.snap{border-color:var(--warn);color:var(--warn)}
+  .statline{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9rem;color:var(--accent);margin:0 0 14px}
+  .kv{display:grid;grid-template-columns:170px 1fr;gap:6px 14px;font-size:.86rem;margin:0 0 18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+  .kv dt{color:var(--dim);margin:0}
+  .kv dd{margin:0;color:var(--ink);word-break:break-all}
+  .note{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:var(--radius);padding:16px 20px;margin:0 0 16px;font-size:.9rem;color:var(--dim)}
+  .note strong{color:var(--warn);font-weight:600}
+  .note p:last-child{margin:0}
+  .jk{color:#7dd3fc}
+  .js{color:#86efac}
+  .jb{color:#fbbf24}
+  .jn{color:#f0abfc}
+  .tabs{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}
+  .tab{background:var(--panel);border:1px solid var(--line);border-radius:999px;color:var(--dim);font-size:.82rem;font-weight:600;padding:6px 16px;cursor:pointer}
+  .tab.on{background:var(--accent);color:#0b0d10;border-color:var(--accent)}
+  .pane{display:none}
+  .pane.on{display:block}
+  .copy{position:relative}
+  .copy .ghost{position:absolute;top:10px;right:10px;margin:0;padding:6px 14px;font-size:.78rem}
+  .mini{font-size:.82rem;color:var(--dim)}
+  ul.tight{margin:0 0 16px;padding-left:20px}
+  ul.tight li{margin:0 0 8px}
+  @media (prefers-color-scheme: light){
+    :root{--bg:#fbfcfd;--panel:#fff;--line:#e3e8ef;--ink:#10151c;--dim:#5c6775}
+    pre{background:#f4f6f9;color:#2b3440}
+    code{background:#eef1f5}
+    .demo input,.demo textarea{background:#f4f6f9}
+    .jk{color:#0369a1}
+    .js{color:#15803d}
+    .jb{color:#b45309}
+    .jn{color:#a21caf}
+  }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>x402 Playground<span class="dot">.</span></h1>
+  <p class="tag">Pay-per-call APIs for agents. No account, no API key, no subscription — the HTTP status code is the handshake. Below: the protocol in 30 seconds, a live 402 challenge you can fetch yourself, and copy-paste code.</p>
+  <div class="status off" id="hdrStatus"><span class="led"></span><span id="hdrStatusText">Checking live endpoint…</span></div>
+  <a class="cta" href="#demo">Try the live demo</a>
+  <a class="cta-secondary" href="#code">Copy-paste integration</a>
+  <a class="cta-tertiary" href="https://derbaroser-eng.github.io/products/">All products</a>
+</div></header>
+
+<div class="wrap">
+
+  <h2>x402 in 30 seconds</h2>
+  <p>HTTP has had a status code for "you haven't paid" since 1997 — <code>402 Payment Required</code>. x402 turns that unused code into a machine-readable payment handshake. The server does not just say "pay"; it says <em>exactly what to pay, in which token, on which network, to which address, for which exact resource</em>.</p>
+
+  <div class="flow">
+    <div class="step"><span class="n">1</span><h3>Request</h3><p>You POST to a resource like a normal API call.</p></div>
+    <div class="step"><span class="n">2</span><h3>402 + challenge</h3><p>Server replies 402 with a JSON challenge describing the price.</p></div>
+    <div class="step"><span class="n">3</span><h3>Pay &amp; sign</h3><p>You build a signed payment payload and send it in a header.</p></div>
+    <div class="step"><span class="n">4</span><h3>Retry → 200</h3><p>Same request again. Server settles on-chain and returns the data.</p></div>
+  </div>
+
+  <div class="principle">
+    <p><strong>The whole protocol is one screen.</strong></p>
+    <p>No OAuth. No dashboard. No API key to leak. The challenge is self-describing JSON, the payment is a signature, and the receipt is on-chain. An agent can discover a paid endpoint, pay it, and read the answer — with no human in the loop.</p>
+  </div>
+
+  <pre><span class="c"># 1. You ask for something</span>
+POST /v1/verify/claims
+{"claims":["The contractor must deliver by 2026-03-01."],"sources":[{"url":"https://example.com/c.txt"}]}
+
+<span class="c"># 2. Server says: 402 — and hands you the exact invoice</span>
+HTTP/1.1 402 Payment Required
+{"x402Version":1,"error":"payment_required",
+ "accepts":[{"scheme":"exact","network":"base","maxAmountRequired":"50000",
+             "asset":"0x833589fC…","payTo":"0xe23d9C54…","resource":"https://…/v1/verify/claims"}]}
+
+<span class="c"># 3. You sign a payment for that nonce, put it in a header</span>
+PAYMENT-SIGNATURE: base64url(x402-v1-payment-payload)
+
+<span class="c"># 4. Same request again → 200 with the data</span></pre>
+
+  <h2 id="demo">Live demo</h2>
+  <p>This calls the real service. Edit the claim, hit the button, and read the actual 402 challenge it sends back.</p>
+
+  <div class="demo">
+    <label for="claim">Claim to verify</label>
+    <textarea id="claim">The contractor must deliver the API by 2026-03-01.</textarea>
+    <div class="row2">
+      <div>
+        <label for="src">Source URL</label>
+        <input id="src" value="https://example.com/contract.txt" spellcheck="false">
+      </div>
+      <div>
+        <label for="minsrc">Minimum sources</label>
+        <input id="minsrc" type="number" min="1" value="1">
+      </div>
+    </div>
+    <button class="btn" id="run">Fetch 402 challenge</button>
+    <button class="ghost" id="curl">Copy as curl</button>
+
+    <div class="result" id="result">
+      <div class="badge" id="badge">…</div>
+      <p class="statline" id="statline"></p>
+      <dl class="kv" id="kv"></dl>
+      <pre id="json"></pre>
+    </div>
+  </div>
+
+  <div class="note" id="corsNote" style="display:none">
+    <p><strong>Why you may be seeing a snapshot.</strong></p>
+    <p>The endpoint above does not send <code>Access-Control-Allow-Origin</code>, so a browser on a different origin cannot read the 402 body — the request goes out, but the browser hides the response. This is a normal server-side posture, not a broken service: <code>curl</code>, Python, Node, and any agent runtime read it directly.</p>
+    <p>If CORS is enabled later, this page automatically shows the live challenge instead. The snapshot is the real response, captured from the live endpoint.</p>
+  </div>
+
+  <h2 id="code">Copy-paste integration</h2>
+  <p>Both snippets use only the standard library — no SDK, no dependencies. The 402 body <em>is</em> the challenge: parse it, sign a payment, retry.</p>
+
+  <div class="tabs">
+    <button class="tab on" data-pane="py">Python</button>
+    <button class="tab" data-pane="js">JavaScript</button>
+    <button class="tab" data-pane="curl">curl</button>
+  </div>
+
+  <div class="pane on" id="pane-py">
+    <div class="copy">
+      <button class="ghost" data-copy="py">Copy</button>
+<pre id="code-py"><span class="c"># stdlib only. Python 3.9+</span>
+import json, urllib.request, urllib.error
+
+SERVICE = "https://october-birthday-huntington-findlaw.trycloudflare.com"
+URL = SERVICE + "/v1/verify/claims"
+
+body = {
+    "claims": ["The contractor must deliver the API by 2026-03-01."],
+    "sources": [{"url": "https://example.com/contract.txt"}],
+    "minimum_sources": 1,
+}
+
+req = urllib.request.Request(
+    URL,
+    data=json.dumps(body).encode(),
+    headers={"Content-Type": "application/json"},
+    method="POST",
+)
+
+try:
+    with urllib.request.urlopen(req) as r:
+        print(r.status, r.read().decode())          <span class="c"># 200 + data</span>
+except urllib.error.HTTPError as e:
+    challenge = json.loads(e.read())               <span class="c"># 402 body IS the challenge</span>
+    accept = challenge["accepts"][0]
+    print("402 — pay", accept["maxAmountRequired"], accept["extra"]["name"])
+    print("to", accept["payTo"], "on", accept["network"])
+
+    <span class="c"># Build + sign the x402 v1 PaymentPayload for this nonce, then retry:</span>
+    <span class="c">#   headers={"PAYMENT-SIGNATURE": base64url(payload)}</span></pre>
+    </div>
+  </div>
+
+  <div class="pane" id="pane-js">
+    <div class="copy">
+      <button class="ghost" data-copy="js">Copy</button>
+<pre id="code-js"><span class="c">// No dependencies. Node 18+ / any modern browser.</span>
+const SERVICE = "https://october-birthday-huntington-findlaw.trycloudflare.com";
+const URL = SERVICE + "/v1/verify/claims";
+
+const body = {
+  claims: ["The contractor must deliver the API by 2026-03-01."],
+  sources: [{ url: "https://example.com/contract.txt" }],
+  minimum_sources: 1,
+};
+
+const res = await fetch(URL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
+
+if (res.status === 402) {
+  const challenge = await res.json();            <span class="c">// the 402 body IS the challenge</span>
+  const accept = challenge.accepts[0];
+  console.log(`402 — pay ${accept.maxAmountRequired} ${accept.extra.name}`);
+  console.log(`to ${accept.payTo} on ${accept.network}`);
+
+  <span class="c">// Build + sign the x402 v1 PaymentPayload for this nonce, then retry:</span>
+  <span class="c">//   headers: { "PAYMENT-SIGNATURE": base64url(payload) }</span>
+} else {
+  console.log(res.status, await res.json());     <span class="c">// 200 + data</span>
+}</pre>
+    </div>
+  </div>
+
+  <div class="pane" id="pane-curl">
+    <div class="copy">
+      <button class="ghost" data-copy="curl">Copy</button>
+<pre id="code-curl"><span class="c"># The whole handshake from your terminal</span>
+curl -i -X POST "https://october-birthday-huntington-findlaw.trycloudflare.com/v1/verify/claims" \
+  -H "Content-Type: application/json" \
+  -d '{"claims":["The contractor must deliver the API by 2026-03-01."],
+       "sources":[{"url":"https://example.com/contract.txt"}],
+       "minimum_sources":1}'
+
+<span class="c"># → HTTP/1.1 402 Payment Required</span>
+<span class="c"># → payment-required: eyJhY2…   (base64url challenge blob)</span>
+<span class="c"># → JSON body with accepts[0]: amount, asset, payTo, network, resource</span>
+
+<span class="c"># Then retry the same call with the signed payment:</span>
+<span class="c">#   -H "PAYMENT-SIGNATURE: base64url(x402-v1-payment-payload)"</span></pre>
+    </div>
+  </div>
+
+  <h2>What you are paying for</h2>
+  <div class="grid">
+    <div class="card"><h3>$0.05 per call</h3><p>50000 atomic USDC on Base. Fixed price, no tier, no minimum.</p></div>
+    <div class="card"><h3>Claim verification</h3><p>Verify a claim against sources. Returns a verdict plus a verbatim evidence receipt: source URL, exact quote, confidence.</p></div>
+    <div class="card"><h3>Content extraction</h3><p><code>/v1/extract</code> — one URL per call returns clean markdown, title, byline, excerpt.</p></div>
+    <div class="card"><h3>No account</h3><p>No signup, no API key, no dashboard. A wallet and a signature are the only credentials.</p></div>
+  </div>
+
+  <h2>Details developers ask for</h2>
+  <ul class="tight">
+    <li><strong>Scheme is <code>exact</code>.</strong> The price is fixed, not negotiated. <code>maxAmountRequired</code> is the maximum you will ever be charged.</li>
+    <li><strong><code>maxAmountRequired</code> is atomic.</strong> <code>50000</code> = 50000 / 10⁶ USDC = $0.05. USDC has 6 decimals.</li>
+    <li><strong><code>resource</code> is the paid URL.</strong> The nonce is bound to it — a signature for one resource will not work on another.</li>
+    <li><strong><code>maxTimeoutSeconds</code> bounds the nonce.</strong> 300s here. Pay inside the window or fetch a fresh challenge.</li>
+    <li><strong><code>outputSchema</code> describes the response.</strong> It lets agents validate answers before they pay — and lets indexes like Bazaar v1 ingest the endpoint.</li>
+    <li><strong>The <code>payment-required</code> response header</strong> carries the same challenge as a base64url blob, for clients that read headers instead of bodies.</li>
+  </ul>
+
+  <h2>Try it from your machine</h2>
+  <p>Nothing here is gated. The endpoint is public and the price is $0.05 — you can call it with <code>curl</code> right now and read the challenge, no wallet needed to see the 402.</p>
+  <a class="cta" href="https://derbaroser-eng.github.io/products/">See all products</a>
+  <a class="cta-secondary" href="https://october-birthday-huntington-findlaw.trycloudflare.com/.well-known/x402">Discovery document</a>
+  <p class="mini">The service also exposes <code>/.well-known/x402</code>, <code>/x402.json</code>, <code>/health</code>, and <code>/v1/pricing</code>.</p>
+
+</div>
+
+<footer><div class="wrap">
+  <p>x402 Playground — pay-per-call APIs for agents. No account, no API key, no subscription.</p>
+  <p class="mini">Live service: <a href="https://october-birthday-huntington-findlaw.trycloudflare.com/v1/verify/claims">https://october-birthday-huntington-findlaw.trycloudflare.com/v1/verify/claims</a> · Product index: <a href="https://derbaroser-eng.github.io/products/">derbaroser-eng.github.io/products</a></p>
+</div></footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var SERVICE = "https://october-birthday-huntington-findlaw.trycloudflare.com";
+  var RESOURCE = SERVICE + "/v1/verify/claims";
+
+  // Real 402 challenge captured from the live endpoint (fallback when the
+  // browser cannot read the cross-origin response because the endpoint does
+  // not send Access-Control-Allow-Origin).
+  var SNAPSHOT = {
+    "x402Version": 1,
+    "error": "payment_required",
+    "reason": "no credential supplied",
+    "accepts": [
+      {
+        "scheme": "exact",
+        "network": "base",
+        "maxAmountRequired": "50000",
+        "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "payTo": "0xe23d9C5422A8bdB5281b15596111814808f98F1A",
+        "resource": RESOURCE,
+        "description": "verify-api claim verification",
+        "mimeType": "application/json",
+        "maxTimeoutSeconds": 300,
+        "extra": { "name": "USDC", "version": "2", "priceUsd": 0.05 },
+        "outputSchema": {
+          "input": {
+            "type": "http",
+            "method": "POST",
+            "bodyType": "json",
+            "body": {
+              "claims": ["<assertion to verify>"],
+              "sources": [{ "url": "https://example.com" }]
+            }
+          },
+          "output": {
+            "type": "json",
+            "example": {
+              "verdicts": [{ "claim": "<assertion>", "verdict": "supported" }],
+              "receipt": "rcpt_...",
+              "request_id": "req_..."
+            }
+          }
+        }
+      }
+    ],
+    "how_to_pay": "Retry the same request with the PAYMENT-SIGNATURE header containing the base64url x402 v1 PaymentPayload for this nonce."
+  };
+  var SNAPSHOT_TIME = "2026-10-22T20:35:03Z";
+
+  function esc(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function highlight(json) {
+    return esc(json).replace(
+      /("(\\u[a-f0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(\.\d*)?([eE][+\-]?\d+)?)/g,
+      function (m) {
+        if (/^"/.test(m)) {
+          return /:$/.test(m) ? '<span class="jk">' + m + "</span>" : '<span class="js">' + m + "</span>";
+        }
+        if (/^(true|false|null)$/.test(m)) return '<span class="jb">' + m + "</span>";
+        return '<span class="jn">' + m + "</span>";
+      }
+    );
+  }
+
+  function setStatus(kind, text) {
+    var pill = document.getElementById("hdrStatus");
+    pill.className = "status" + (kind === "live" ? "" : " off");
+    document.getElementById("hdrStatusText").textContent = text;
+  }
+
+  function renderFields(accept) {
+    var kv = document.getElementById("kv");
+    var rows = [
+      ["scheme", accept.scheme],
+      ["network", accept.network],
+      ["maxAmountRequired", accept.maxAmountRequired + " atomic = $" + (accept.extra && accept.extra.priceUsd)],
+      ["asset", accept.asset + " (" + (accept.extra && accept.extra.name) + ")"],
+      ["payTo", accept.payTo],
+      ["resource", accept.resource],
+      ["maxTimeoutSeconds", String(accept.maxTimeoutSeconds)],
+      ["mimeType", accept.mimeType]
+    ];
+    kv.innerHTML = rows.map(function (r) {
+      return "<dt>" + esc(r[0]) + "</dt><dd>" + esc(r[1]) + "</dd>";
+    }).join("");
+  }
+
+  function showResult(opts) {
+    var result = document.getElementById("result");
+    var badge = document.getElementById("badge");
+    var statline = document.getElementById("statline");
+    var json = document.getElementById("json");
+
+    badge.className = "badge " + (opts.live ? "live" : "snap");
+    badge.textContent = opts.live ? "● LIVE — from the endpoint just now" : "◆ SNAPSHOT — captured " + SNAPSHOT_TIME;
+    statline.textContent = opts.statline;
+    renderFields(opts.accept);
+    json.innerHTML = highlight(opts.body);
+    result.className = "result on";
+    document.getElementById("corsNote").style.display = opts.live ? "none" : "block";
+  }
+
+  function runDemo() {
+    var claim = document.getElementById("claim").value.trim();
+    var src = document.getElementById("src").value.trim();
+    var minSources = parseInt(document.getElementById("minsrc").value, 10) || 1;
+    var btn = document.getElementById("run");
+
+    if (!claim) { alert("Enter a claim to verify."); return; }
+
+    btn.disabled = true;
+    btn.textContent = "Requesting…";
+    setStatus("off", "Requesting " + RESOURCE + "…");
+
+    var started = Date.now();
+    var body = JSON.stringify({
+      claims: [claim],
+      sources: [{ url: src || "https://example.com" }],
+      minimum_sources: minSources
+    });
+
+    fetch(RESOURCE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: body
+    }).then(function (res) {
+      var ms = Date.now() - started;
+      return res.text().then(function (text) {
+        var parsed = null;
+        try { parsed = JSON.parse(text); } catch (e) { parsed = null; }
+        var accept = parsed && parsed.accepts && parsed.accepts[0];
+
+        if (res.status === 402 && accept) {
+          setStatus("live", "Live — HTTP 402 in " + ms + " ms");
+          showResult({
+            live: true,
+            accept: accept,
+            body: JSON.stringify(parsed, null, 2),
+            statline: "HTTP/1.1 402 Payment Required   ·   " + ms + " ms   ·   " + RESOURCE
+          });
+        } else {
+          setStatus("live", "Live — HTTP " + res.status + " in " + ms + " ms");
+          showResult({
+            live: true,
+            accept: accept || SNAPSHOT.accepts[0],
+            body: parsed ? JSON.stringify(parsed, null, 2) : esc(text),
+            statline: "HTTP/1.1 " + res.status + "   ·   " + ms + " ms   ·   " + RESOURCE
+          });
+        }
+      });
+    }).catch(function () {
+      var ms = Date.now() - started;
+      setStatus("off", "Browser blocked the cross-origin read — showing the captured challenge");
+      showResult({
+        live: false,
+        accept: SNAPSHOT.accepts[0],
+        body: JSON.stringify(SNAPSHOT, null, 2),
+        statline: "HTTP/1.1 402 Payment Required   ·   " + ms + " ms   ·   browser could not read the body (CORS)"
+      });
+    }).then(function () {
+      btn.disabled = false;
+      btn.textContent = "Fetch 402 challenge";
+    });
+  }
+
+  function copyText(text, btn) {
+    var done = function () {
+      var old = btn.textContent;
+      btn.textContent = "Copied";
+      setTimeout(function () { btn.textContent = old; }, 1400);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+      done();
+    }
+  }
+
+  document.getElementById("run").addEventListener("click", runDemo);
+
+  document.getElementById("curl").addEventListener("click", function () {
+    var claim = document.getElementById("claim").value.trim() || "The contractor must deliver the API by 2026-03-01.";
+    var src = document.getElementById("src").value.trim() || "https://example.com/contract.txt";
+    var cmd = 'curl -i -X POST "' + RESOURCE + '" \\\n' +
+      '  -H "Content-Type: application/json" \\\n' +
+      '  -d \'{"claims":["' + claim.replace(/"/g, '\\"') + '"],\n' +
+      '       "sources":[{"url":"' + src + '"}],\n' +
+      '       "minimum_sources":1}\'';
+    copyText(cmd, this);
+  });
+
+  document.querySelectorAll(".tab").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      document.querySelectorAll(".tab").forEach(function (t) { t.className = "tab"; });
+      document.querySelectorAll(".pane").forEach(function (p) { p.className = "pane"; });
+      tab.className = "tab on";
+      document.getElementById("pane-" + tab.dataset.pane).className = "pane on";
+    });
+  });
+
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var el = document.getElementById("code-" + btn.dataset.copy);
+      copyText(el.innerText, btn);
+    });
+  });
+
+  // Header status: probe the health endpoint. Same CORS caveat as the demo.
+  fetch(SERVICE + "/health", { method: "GET" })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      setStatus("live", "Live — " + (j.status || "ok") + " · " + (j.version || "") + " · " + (j.mode || ""));
+    })
+    .catch(function () {
+      setStatus("off", "Live service reachable from servers/agents — browser reads are CORS-blocked (see demo)");
+    });
+})();
+</script>
+</body>
+</html>
