@@ -188,7 +188,7 @@ PAYMENT-SIGNATURE: base64url(x402-v1-payment-payload)
 <pre id="code-py"><span class="c"># stdlib only. Python 3.9+</span>
 import json, urllib.request, urllib.error
 
-SERVICE = "https://october-birthday-huntington-findlaw.trycloudflare.com"
+SERVICE = "https://documents-planned-sent-ought.trycloudflare.com"
 URL = SERVICE + "/v1/verify/claims"
 
 body = {
@@ -222,7 +222,7 @@ except urllib.error.HTTPError as e:
     <div class="copy">
       <button class="ghost" data-copy="js">Copy</button>
 <pre id="code-js"><span class="c">// No dependencies. Node 18+ / any modern browser.</span>
-const SERVICE = "https://october-birthday-huntington-findlaw.trycloudflare.com";
+const SERVICE = "https://documents-planned-sent-ought.trycloudflare.com";
 const URL = SERVICE + "/v1/verify/claims";
 
 const body = {
@@ -255,7 +255,7 @@ if (res.status === 402) {
     <div class="copy">
       <button class="ghost" data-copy="curl">Copy</button>
 <pre id="code-curl"><span class="c"># The whole handshake from your terminal</span>
-curl -i -X POST "https://october-birthday-huntington-findlaw.trycloudflare.com/v1/verify/claims" \
+curl -i -X POST "https://documents-planned-sent-ought.trycloudflare.com/v1/verify/claims" \
   -H "Content-Type: application/json" \
   -d '{"claims":["The contractor must deliver the API by 2026-03-01."],
        "sources":[{"url":"https://example.com/contract.txt"}],
@@ -291,21 +291,21 @@ curl -i -X POST "https://october-birthday-huntington-findlaw.trycloudflare.com/v
   <h2>Try it from your machine</h2>
   <p>Nothing here is gated. The endpoint is public and the price is $0.05 — you can call it with <code>curl</code> right now and read the challenge, no wallet needed to see the 402.</p>
   <a class="cta" href="https://derbaroser-eng.github.io/products/">See all products</a>
-  <a class="cta-secondary" href="https://october-birthday-huntington-findlaw.trycloudflare.com/.well-known/x402">Discovery document</a>
+  <a class="cta-secondary" href="https://documents-planned-sent-ought.trycloudflare.com/.well-known/x402">Discovery document</a>
   <p class="mini">The service also exposes <code>/.well-known/x402</code>, <code>/x402.json</code>, <code>/health</code>, and <code>/v1/pricing</code>.</p>
 
 </div>
 
 <footer><div class="wrap">
   <p>x402 Playground — pay-per-call APIs for agents. No account, no API key, no subscription.</p>
-  <p class="mini">Live service: <a href="https://october-birthday-huntington-findlaw.trycloudflare.com/v1/verify/claims">https://october-birthday-huntington-findlaw.trycloudflare.com/v1/verify/claims</a> · Product index: <a href="https://derbaroser-eng.github.io/products/">derbaroser-eng.github.io/products</a></p>
+  <p class="mini">Live service: <a href="https://documents-planned-sent-ought.trycloudflare.com/v1/verify/claims">https://documents-planned-sent-ought.trycloudflare.com/v1/verify/claims</a> · Product index: <a href="https://derbaroser-eng.github.io/products/">derbaroser-eng.github.io/products</a></p>
 </div></footer>
 
 <script>
 (function () {
   "use strict";
 
-  var SERVICE = "https://october-birthday-huntington-findlaw.trycloudflare.com";
+  var SERVICE = "https://documents-planned-sent-ought.trycloudflare.com";
   var RESOURCE = SERVICE + "/v1/verify/claims";
 
   // Real 402 challenge captured from the live endpoint (fallback when the
