@@ -1,0 +1,98 @@
+{
+  "note": "All URLs below returned HTTP 200 via curl -L on 2026-11-20. Lock file: index links must be in this manifest or on the product landing page.",
+  "products": {
+    "support-triage": {
+      "checkout_urls": [
+        "https://buy.stripe.com/4gMaF0b2a9skdTb35C4ko0J"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "dunning": {
+      "checkout_urls": [
+        "https://buy.stripe.com/fZubJ40nwgUM6qJ6hO4ko0K"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "contract-extractor": {
+      "checkout_urls": [
+        "https://buy.stripe.com/9B614q2vE33WbL3gWs4ko0L"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "freelance-tracker": {
+      "checkout_urls": [
+        "https://buy.stripe.com/fZu9AW2vE9sk7uN7lS4ko0M"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "receipt-processor": {
+      "checkout_urls": [
+        "https://buy.stripe.com/4gM6oKc6e4809CVbC84ko0N"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "data-router": {
+      "checkout_urls": [
+        "https://buy.stripe.com/7sYfZkc6e33W16p5dK4ko0O"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "scope-detector": {
+      "checkout_urls": [
+        "https://buy.stripe.com/7sYeVg5HQdIA7uN9u04ko0P"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "invoice-extractor": {
+      "checkout_urls": [
+        "https://buy.stripe.com/8x26oKdaiawoeXfcGc4ko0Q"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "prospect-research": {
+      "checkout_urls": [
+        "https://buy.stripe.com/4gM8wS6LUbAseXffSo4ko0R"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "aurum-verify": {
+      "checkout_urls": [
+        "https://buy.stripe.com/7sY00m5HQcEw5mFdKg4ko0I"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "email-handler": {
+      "checkout_urls": [
+        "https://buy.stripe.com/14A7sO6LU7kc6qJdKg4ko0x",
+        "https://buy.stripe.com/cNi7sO1rAbAs4iB9u04ko0H"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "shellguard": {
+      "checkout_urls": [
+        "https://buy.stripe.com/00weVg5HQawocP77lS4ko0S",
+        "https://buy.stripe.com/aFafZk3zIbAs16p7lS4ko0T"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    },
+    "null-tide": {
+      "checkout_urls": [
+        "https://buy.stripe.com/5kQ5kGeemawo5mFay44ko0U"
+      ],
+      "http_status": 200,
+      "verified_at": "2026-11-20T20:45+01:00"
+    }
+  }
+}
