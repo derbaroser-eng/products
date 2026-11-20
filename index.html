@@ -24,6 +24,7 @@
   .card .price{font-size:.85rem;color:var(--dim);margin-top:8px}
   footer{padding:44px 0 72px;border-top:1px solid var(--line);color:var(--dim);font-size:.9rem}
   a{color:var(--accent)}
+  .storelink{display:inline-block;margin-top:14px;font-weight:700}
   @media (prefers-color-scheme: light){
     :root{--bg:#fbfcfd;--panel:#fff;--line:#e3e8ef;--ink:#10151c;--dim:#5c6775}
   }
@@ -33,11 +34,12 @@
 <header><div class="wrap">
   <h1>derbaroser-eng<span class="dot">.</span></h1>
   <p class="tag">Deterministic B2B tools for SaaS teams. No ML. No subscriptions. No data leaves your machine.</p>
+  <p><a class="storelink" href="https://derbaroser-eng.github.io/store/">Browse the AURUM Store - 13 products, instant Stripe checkout</a></p>
 </div></header>
 
 <div class="wrap">
   <h2>Products</h2>
-  <div class="grid">
+  <div class="grid" data-products="13">
     <a class="card" href="https://derbaroser-eng.github.io/support-triage/">
       <h3>support-triage</h3>
       <p>Classify support messages into bug, feature request, urgent, or noise.</p>
@@ -121,15 +123,13 @@
   </div>
   <h2>Free tier + name-your-price</h2>
   <p>Every product has a free tier (download and use locally) and a name-your-price option (min 1 EUR). Pay what you want, or pay nothing.</p>
-  <div class="grid">
-  </div>
 </div>
 <footer><div class="wrap">
   <p>derbaroser-eng — B2B tools for SaaS teams</p>
 </div></footer>
 <div class="value-posts">
 <h2>Learn from Our Journey</h2>
-<p>We built 9 deterministic B2B tools. Here is what we learned:</p>
+<p>We built 13 deterministic products. Here is what we learned:</p>
 <ul>
 <li><a href="https://gist.github.com/derbaroser-eng/0e5d27fc52e3d1618148cc1108525ea8">We built 9 tools. Here is what we learned.</a> (GitHub Gist)</li>
 <li><a href="https://gist.github.com/derbaroser-eng/ce488808745227f9d40831919df87da4">Support triage: why rules beat LLMs.</a> (GitHub Gist)</li>
